@@ -1,4 +1,6 @@
 yarn.lock
+.env
+.env.development
 
 # compiled output
 /dist
