@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  virtual_workers_manager_redis:
+    image: redis
+    restart: always
+    ports:
+      - 6378:6378
+
+  virtual_workers_manager_postgres:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: dbdatabase
+      POSTGRES_USER: dbuser
+      POSTGRES_PASSWORD: dbpass
+    volumes:
+      - ./docker/pgdb:/var/lib/postgresql/data
+
+  virtual_workers_manager_rabbitmq:
+    image: heidiks/rabbitmq-delayed-message-exchange:3.11.28-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=password
+    ports:
+      - 5672:5672
+      - 15672:15672
